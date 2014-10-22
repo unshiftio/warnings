@@ -1,0 +1,16 @@
+{
+  "name": "warnings",
+  "version": "0.0.1",
+  "description": "Output warnings to the terminal for possible critical issues. These issues can then be ignored by your users using options.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "warning",
+    "warnings",
+    "error"
+  ],
+  "author": "Arnout Kazemier",
+  "license": "MIT"
+}
