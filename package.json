@@ -4,7 +4,11 @@
   "description": "Output warnings to the terminal for possible critical issues. These issues can then be ignored by your users using options.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "100%": "istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "test": "mocha test.js",
+    "watch": "mocha --watch test.js",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- test.js",
+    "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- test.js"
   },
   "keywords": [
     "warning",
@@ -12,6 +16,10 @@
     "error"
   ],
   "author": "Arnout Kazemier",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unshiftio/warnings"
+  },
   "license": "MIT",
   "devDependencies": {
     "assume": "0.0.x",
