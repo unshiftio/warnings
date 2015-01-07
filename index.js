@@ -1,11 +1,13 @@
 'use strict';
 
-var argv = require('argh').argv
+var destroy = require('demolish')
+  , argv = require('argh').argv
   , kuler = require('kuler');
 
 var toString = Object.prototype.toString;
 
 /**
+ * Warnings: Output warnings in the terminal when users mess things up.
  *
  * @constructor
  * @param {String} namespace The namespace to prefix warnings.
@@ -20,6 +22,10 @@ function Warnings(namespace, options) {
   this.namespace = namespace;
   this.warnings = Object.create(null);
   this.stream = options.stream || process.stderr;
+  this.colors = {
+    prefix: options.prefix || '#EF7D43',
+    line: options.line || '#FFFFFF'
+  };
   this.atty = 'atty' in options ? options.atty : (this.stream.fd
     ? require('tty').isatty(this.stream.fd)
     : true
@@ -135,8 +141,8 @@ Warnings.prototype.write = function write(msg) {
     // Color the prefix orange if the terminal allows colors.
     //
     if (this.atty) {
-      prefix = kuler(prefix, '#EF7D43');
-      line = kuler(line, '#FFFFFF');
+      prefix = kuler(prefix, this.colors.prefix);
+      line = kuler(line, this.colors.line);
     }
 
     return prefix + line;
@@ -165,15 +171,11 @@ Warnings.prototype.disable = function disable(options) {
 /**
  * Destroy the warning instance, nuke all the things.
  *
+ * @type {Function}
  * @returns {Boolean}
  * @api public
  */
-Warnings.prototype.destroy = function destroy() {
-  if (!this.warnings) return false;
-
-  this.namespace = this.warnings = this.stream = this.atty = null;
-  return true;
-};
+Warnings.prototype.destroy = destroy('warnings, namespace, stream, atty, colors');
 
 //
 // Expose the interface.
