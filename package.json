@@ -28,7 +28,6 @@
     "pre-commit": "0.0.x"
   },
   "dependencies": {
-    "argh": "0.1.x",
     "demolish": "1.0.x",
     "kuler": "0.0.x"
   }
