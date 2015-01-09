@@ -32,6 +32,14 @@ describe('warnings', function () {
       assume(warn.warnings.foo.name).equals('foo');
       assume(warn.warnings.bar.name).equals('bar');
     });
+
+    it('can set a warning message using an array', function () {
+      var warn = new Warnings();
+
+      warn.set('foo', ['bar', 'pez']);
+      assume(warn.warnings.foo.message).is.a('array');
+      assume(warn.warnings.foo.message).deep.equals(['bar', 'pez']);
+    });
   });
 
   describe('#read', function () {

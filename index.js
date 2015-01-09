@@ -21,7 +21,7 @@ function Warnings(namespace, options) {
   this.namespace = namespace;
   this.warnings = Object.create(null);
   this.stream = options.stream || process.stderr;
-  this.colors = {
+  this.colors = options.colors || {
     prefix: options.prefix || '#EF7D43',
     line: options.line || '#FFFFFF'
   };
@@ -65,7 +65,7 @@ Warnings.prototype.read = function read(path) {
  * @api public
  */
 Warnings.prototype.set = function set(name, spec) {
-  if ('string' === typeof spec) spec = { message: spec };
+  if ('string' === typeof spec || Array.isArray(spec)) spec = { message: spec };
   if (!spec.name) spec.name = name;
 
   this.warnings[name] = spec;
@@ -180,7 +180,7 @@ Warnings.prototype.disable = function disable(names) {
  * @returns {Boolean}
  * @api public
  */
-Warnings.prototype.destroy = destroy('warnings, namespace, stream, atty, colors');
+Warnings.prototype.destroy = destroy('disabled, namespace, warnings, stream, colors, atty');
 
 //
 // Expose the interface.
