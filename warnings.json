@@ -1,0 +1,4 @@
+[
+  { "name": "foo", "message": "bar" },
+  { "name": "hello", "message": "world" }
+]

@@ -52,7 +52,7 @@ Warnings.prototype.read = function read(path) {
   }
 
   Object.keys(warnings).forEach(function each(warning) {
-    this.set(warning.name, warning);
+    this.set(warning, warnings[warning]);
   }, this);
 
   return this;
@@ -66,7 +66,9 @@ Warnings.prototype.read = function read(path) {
  * @api public
  */
 Warnings.prototype.set = function set(name, spec) {
+  if ('string' === typeof spec) spec = { message: spec };
   if (!spec.name) spec.name = name;
+
   this.warnings[name] = spec;
 
   return this;
@@ -87,13 +89,14 @@ Warnings.prototype.about = function about(key, what) {
   var warning = this.warnings[key]
     , passed = false;
 
-  delete this.warnings[key];
-
   //
   // Fast case, this warning should always be shown, it doesn't require any
   // conditional information.
   //
-  if (!('conditional' in warning)) return this.write(warning.message);
+  if (!('conditional' in warning)) {
+    delete this.warnings[key];
+    return this.write(warning.message);
+  }
 
   switch (toString.call(warning.conditional).slice(8, -1).toLowerCase()) {
     case 'function':
@@ -114,6 +117,7 @@ Warnings.prototype.about = function about(key, what) {
   //
   if (!passed) return false;
 
+  delete this.warnings[key];
   return this.write(warning.message);
 };
 
@@ -152,17 +156,19 @@ Warnings.prototype.write = function write(msg) {
 /**
  * Disable certain warnings.
  *
- * @param {Object} options The various of
+ * @param {Mixed} names The warnings that should be disabled.
  * @returns {Warnings}
  * @api public
  */
-Warnings.prototype.disable = function disable(options) {
-  if (Array.isArray(options)) {
-    Array.prototype.push.apply(this.disabled, options);
-  } else if ('object' === typeof options) {
-    return this.disable(Object.keys(options));
+Warnings.prototype.disable = function disable(names) {
+  if (Array.isArray(names)) {
+    Array.prototype.push.apply(this.disabled, names);
+  } else if (arguments.length > 1) {
+    Array.prototype.push.apply(this.disabled, arguments);
+  } else if ('object' === typeof names) {
+    return this.disable(Object.keys(names));
   } else {
-    this.disabled.push(options);
+    this.disabled.push(names);
   }
 
   return this;
