@@ -1,7 +1,6 @@
 'use strict';
 
 var destroy = require('demolish')
-  , argv = require('argh').argv
   , kuler = require('kuler');
 
 var toString = Object.prototype.toString;
