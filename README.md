@@ -9,6 +9,15 @@
 [cover]: https://img.shields.io/coveralls/unshiftio/warnings/master.svg?style=flat-square
 [irc]: https://img.shields.io/badge/IRC-irc.freenode.net%23unshift-00a8ff.svg?style=flat-square
 
+<p align="center">
+  <img
+  src="https://raw.githubusercontent.com/unshiftio/warnings/master/warnings.PNG"
+  alt="example output when triggering a warning"/>
+</p>
+
+Warnings allows you to create, disable and output warnings using a simple and
+easy to manage API.
+
 ## Installation
 
 This module is released in the public npm registry and can be installed by
