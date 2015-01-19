@@ -10,7 +10,7 @@ module.exports = {
 
   fail: {
     message: 'hello i should fail',
-    conditional: function () {
+    when: function () {
       return false;
     }
   },

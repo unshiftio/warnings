@@ -66,6 +66,7 @@ Warnings.prototype.read = function read(path) {
  */
 Warnings.prototype.set = function set(name, spec) {
   if ('string' === typeof spec || Array.isArray(spec)) spec = { message: spec };
+  if (spec.when) spec.conditional = spec.when;
   if (!spec.name) spec.name = name;
 
   this.warnings[name] = spec;
