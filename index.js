@@ -61,6 +61,7 @@ Warnings.prototype.read = function read(path) {
  * Add a new warning.
  *
  * @param {String} name The name/key of the warning.
+ * @param {Mixed} spec Details about the warning.
  * @returns {Warnings}
  * @api public
  */
